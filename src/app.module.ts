@@ -9,6 +9,11 @@ import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import * as redisStore from 'cache-manager-redis-store';
 import { ConfigModule } from '@nestjs/config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { EventsModule } from './events/events.module';
+import { EventsListener } from './events/events.listener';
+import { CommentsService } from './comments/comments.service';
+import { EventsService } from './events/events.service';
 
 @Module({
   imports: [
@@ -35,7 +40,9 @@ import { ConfigModule } from '@nestjs/config';
       entities: [Comment],
       synchronize: true,
     }),
+    EventEmitterModule.forRoot(),
     CommentsModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [
@@ -44,6 +51,9 @@ import { ConfigModule } from '@nestjs/config';
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
     },
+    // CommentsService,
+    EventsService,
+    EventsListener,
   ],
 })
 export class AppModule {}

@@ -12,14 +12,20 @@ import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import { EventsService } from '../events/events.service';
 
 @Controller('comments')
 export class CommentsController {
-  constructor(private readonly commentsService: CommentsService) {}
+  constructor(
+    private readonly commentsService: CommentsService,
+    private readonly eventsService: EventsService,
+  ) {}
 
   @Post()
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentsService.create(createCommentDto);
+  async create(@Body() createCommentDto: CreateCommentDto) {
+    const newComment = await this.commentsService.create(createCommentDto);
+    await this.eventsService.emitCommentSavedEvent(newComment);
+    return newComment;
   }
 
   @CacheKey('comments')
