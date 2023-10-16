@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { CommentsModule } from './comments/comments.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Comment } from './comments/entities/comment.entity';
+import { Reply } from './replies/entities/reply.entity';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import * as redisStore from 'cache-manager-redis-store';
@@ -12,8 +13,9 @@ import { ConfigModule } from '@nestjs/config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EventsModule } from './events/events.module';
 import { EventsListener } from './events/events.listener';
-import { CommentsService } from './comments/comments.service';
+// import { CommentsService } from './comments/comments.service';
 import { EventsService } from './events/events.service';
+import { RepliesModule } from './replies/replies.module';
 
 @Module({
   imports: [
@@ -37,12 +39,13 @@ import { EventsService } from './events/events.service';
       username: 'root',
       password: 'Max271212!',
       database: 'comments',
-      entities: [Comment],
+      entities: [Comment, Reply],
       synchronize: true,
     }),
     EventEmitterModule.forRoot(),
     CommentsModule,
     EventsModule,
+    RepliesModule,
   ],
   controllers: [AppController],
   providers: [
@@ -51,7 +54,6 @@ import { EventsService } from './events/events.service';
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
     },
-    // CommentsService,
     EventsService,
     EventsListener,
   ],
