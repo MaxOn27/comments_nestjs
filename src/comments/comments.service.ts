@@ -16,10 +16,15 @@ export class CommentsService {
     private commentsRepository: Repository<Comment>,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     @InjectQueue('comment-queue') private queue: Queue,
-  ) {}
+  ) {
+  }
+
   async create(@Body() createCommentDto: CreateCommentDto) {
     const newComment = await this.commentsRepository.save(createCommentDto);
-    await this.queue.add('comment', newComment);
+    const comments = await this.commentsRepository.find();
+    this.cacheManager.del('comments');
+    this.cacheManager.set('comments', comments);
+    this.queue.add('comment', newComment);
     return newComment;
   }
 

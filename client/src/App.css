@@ -1,0 +1,37 @@
+.App {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.form-item {
+  margin: 10px 0;
+  width: 20%;
+  height: 1.5rem;
+  padding: 3px;
+  font-size: 1rem;
+}
+
+.error {
+  color: red;
+  text-transform: uppercase;
+  font-weight: 500;
+}
