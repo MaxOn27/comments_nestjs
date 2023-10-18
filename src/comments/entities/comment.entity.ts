@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Reply } from '../../replies/entities/reply.entity';
 
 @Entity()
 export class Comment {
@@ -32,4 +34,7 @@ export class Comment {
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
   public updated_at: Date;
+
+  @OneToMany(() => Reply, (reply) => reply.comment)
+  replies: Reply[];
 }

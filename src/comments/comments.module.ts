@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Comment } from './entities/comment.entity';
 import { BullModule } from '@nestjs/bull';
 import { EventsService } from '../events/events.service';
-import { EventsListener } from "../events/events.listener";
+import { EventsListener } from '../events/events.listener';
 
 @Module({
   imports: [
@@ -16,5 +16,6 @@ import { EventsListener } from "../events/events.listener";
   ],
   controllers: [CommentsController],
   providers: [CommentsService, EventsService, EventsListener],
+  exports: [CommentsService],
 })
 export class CommentsModule {}

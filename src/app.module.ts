@@ -15,6 +15,7 @@ import { EventsModule } from './events/events.module';
 import { EventsListener } from './events/events.listener';
 import { EventsService } from './events/events.service';
 import { RepliesModule } from './replies/replies.module';
+import * as process from "process";
 
 @Module({
   imports: [
@@ -32,11 +33,11 @@ import { RepliesModule } from './replies/replies.module';
       },
     }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
+      type: process.env.MYSQL_DB as 'mysql',
+      host: process.env.MYSQL_HOST,
       port: 3306,
-      username: 'root',
-      password: 'Max271212!',
+      username: process.env.MYSQL_USERNAME,
+      password: process.env.MYSQL_PASSWORD,
       database: 'comments',
       entities: [Comment, Reply],
       synchronize: true,

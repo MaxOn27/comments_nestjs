@@ -10,7 +10,7 @@ export class CreateReplyDto {
   @IsEmail()
   email: string;
 
-  @IsString()
-  @IsNotEmpty()
-  comment: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // comment: string;
 }
