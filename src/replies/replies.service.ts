@@ -1,4 +1,4 @@
-import { Body, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateReplyDto } from './dto/create-reply.dto';
 // import { UpdateReplyDto } from './dto/update-reply.dto';
 import { Repository } from 'typeorm';
@@ -34,8 +34,8 @@ export class RepliesService {
     return reply;
   }
 
-  findAll() {
-    return `This action returns all replies`;
+  async findAll() {
+    return await this.replyRepository.find();
   }
 
   // findOne(id: number) {

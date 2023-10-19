@@ -15,7 +15,7 @@ import { EventsModule } from './events/events.module';
 import { EventsListener } from './events/events.listener';
 import { EventsService } from './events/events.service';
 import { RepliesModule } from './replies/replies.module';
-import * as process from "process";
+import * as process from 'process';
 
 @Module({
   imports: [

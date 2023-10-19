@@ -24,8 +24,8 @@ export class RepliesController {
   }
 
   @Get('replies')
-  findAll() {
-    return this.repliesService.findAll();
+  async findAll() {
+    return await this.repliesService.findAll();
   }
 
   // @Get(':id')
