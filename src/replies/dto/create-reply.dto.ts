@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsEmail } from 'class-validator';
+import { IsNotEmpty, IsString, IsEmail, IsNumber } from 'class-validator';
 
 export class CreateReplyDto {
   @IsString()
@@ -10,7 +10,10 @@ export class CreateReplyDto {
   @IsEmail()
   email: string;
 
-  // @IsString()
-  // @IsNotEmpty()
-  // comment: string;
+  @IsString()
+  @IsNotEmpty()
+  reply: string;
+
+  @IsNumber()
+  commentId: number;
 }

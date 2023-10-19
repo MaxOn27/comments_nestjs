@@ -1,7 +1,8 @@
+// comment.entity.ts
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
+  Column,
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
@@ -19,22 +20,19 @@ export class Comment {
   @Column()
   email: string;
 
-  @Column('longtext')
+  @Column('text')
   comment: string;
 
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
-  public created_at: Date;
+  created_at: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  public updated_at: Date;
-
-  @OneToMany(() => Reply, (reply) => reply.comment)
-  replies: Reply[];
+  updated_at: Date;
 }

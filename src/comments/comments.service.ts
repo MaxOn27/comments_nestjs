@@ -6,8 +6,6 @@ import { Repository } from 'typeorm';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
-import { InjectQueue } from '@nestjs/bull';
-import { Queue } from 'bull';
 
 @Injectable()
 export class CommentsService {
@@ -15,15 +13,13 @@ export class CommentsService {
     @InjectRepository(Comment)
     private commentsRepository: Repository<Comment>,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-    @InjectQueue('comment-queue') private queue: Queue,
   ) {}
 
   async create(@Body() createCommentDto: CreateCommentDto) {
     const newComment = await this.commentsRepository.save(createCommentDto);
     const comments = await this.commentsRepository.find();
     this.cacheManager.del('comments');
-    this.cacheManager.set('comments', comments);
-    this.queue.add('comment', newComment);
+    this.cacheManager.set('comments', comments, 0);
     return newComment;
   }
 
@@ -33,7 +29,7 @@ export class CommentsService {
       return cachedData;
     }
     const comments = await this.commentsRepository.find();
-    await this.cacheManager.set('comments', comments);
+    await this.cacheManager.set('comments', comments, 0);
     return comments;
   }
 

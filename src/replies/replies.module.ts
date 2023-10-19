@@ -5,15 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Reply } from './entities/reply.entity';
 import { CommentsService } from '../comments/comments.service';
 import { Comment } from '../comments/entities/comment.entity';
-import { BullModule } from '@nestjs/bull';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Reply, Comment]),
-    BullModule.registerQueue({
-      name: 'comment-queue',
-    }),
-  ],
+  imports: [TypeOrmModule.forFeature([Reply, Comment])],
   controllers: [RepliesController],
   providers: [RepliesService, CommentsService],
 })

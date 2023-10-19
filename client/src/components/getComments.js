@@ -9,7 +9,6 @@ const GetComments = () => {
   useEffect( () => {
     (async () => {
       const {data} = await axios.get("http://localhost:3001/comments");
-      console.log(data);
       setComments(data)
     })();
   }, []);
@@ -21,10 +20,10 @@ const GetComments = () => {
 
 
   return (
-    <section className="w-full p-4">
+    <div className="w-full p-4">
       {comments && comments.map(comment => (
         <section key={comment.id} className="w-full m-3 flex flex-col justify-between">
-          <header className="flex justify-left mb-3 bg-neutral-200 p-4">
+          <header className="flex justify-left mb-3 bg-neutral-300 p-4">
             <div className="flex w-1/2">
               <h3 className="mr-10 font-bold">{comment.username || 'Anonymous'}</h3>
               <h3 className="mr-10 font-bold">{comment.updated_at}</h3>
@@ -43,12 +42,12 @@ const GetComments = () => {
           <footer className="mb-10 p-4">
             <button className="font-bold bg-indigo-500 hover:bg-indigo-400 text-white p-2 w-36">Reply</button>
           </footer>
-          <section>
+          <section className="w-full p-4 flex flex-col justify-end">
             <GetReplies commentId={comment.id}/>
           </section>
         </section>
       ))}
-    </section>
+    </div>
   );
 };
 

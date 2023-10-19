@@ -1,12 +1,10 @@
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
+  Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
 } from 'typeorm';
-import { Comment } from '../../comments/entities/comment.entity';
 
 @Entity()
 export class Reply {
@@ -19,19 +17,22 @@ export class Reply {
   @Column()
   email: string;
 
+  @Column('text')
+  reply: string;
+
+  @Column()
+  commentId: number;
+
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
-  public created_at: Date;
+  created_at: Date;
 
   @UpdateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  public updated_at: Date;
-
-  @ManyToOne(() => Comment, (comment) => comment.replies)
-  comment: Comment;
+  updated_at: Date;
 }
