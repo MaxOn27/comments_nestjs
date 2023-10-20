@@ -1,13 +1,10 @@
-// comment.entity.ts
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
 } from 'typeorm';
-import { Reply } from '../../replies/entities/reply.entity';
 
 @Entity()
 export class Comment {

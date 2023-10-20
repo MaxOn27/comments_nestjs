@@ -18,4 +18,8 @@ export class RepliesService {
   async findAll(): Promise<Reply[]> {
     return await this.replyRepository.find();
   }
+
+  async remove(id: number) {
+    return await this.replyRepository.delete(id);
+  }
 }

@@ -7,9 +7,7 @@ import { EventsService } from '../events/events.service';
 import { EventsListener } from '../events/events.listener';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Comment]),
-  ],
+  imports: [TypeOrmModule.forFeature([Comment])],
   controllers: [CommentsController],
   providers: [CommentsService, EventsService, EventsListener],
   exports: [CommentsService],

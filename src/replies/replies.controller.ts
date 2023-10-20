@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Param } from '@nestjs/common';
 import { RepliesService } from './replies.service';
 import { CreateReplyDto } from './dto/create-reply.dto';
 
@@ -14,5 +14,10 @@ export class RepliesController {
   @Get('all')
   async findAll() {
     return await this.repliesService.findAll();
+  }
+
+  @Delete('delete/:id')
+  remove(@Param('id') id: string) {
+    return this.repliesService.remove(+id);
   }
 }

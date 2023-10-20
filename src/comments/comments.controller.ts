@@ -29,7 +29,7 @@ export class CommentsController {
   }
 
   @CacheKey('comments')
-  // @CacheTTL(0)
+  @CacheTTL(0)
   @UseInterceptors(CacheInterceptor)
   @Get('comments')
   async findAll() {
