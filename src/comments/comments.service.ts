@@ -18,18 +18,22 @@ export class CommentsService {
   async create(@Body() createCommentDto: CreateCommentDto) {
     const newComment = await this.commentsRepository.save(createCommentDto);
     const comments = await this.commentsRepository.find();
-    this.cacheManager.del('comments');
+
+    await this.cacheManager.del('comments');
+    await this.cacheManager.del('replies');
     this.cacheManager.set('comments', comments, 0);
+
     return newComment;
   }
 
   async findAll() {
+    const comments = await this.commentsRepository.find();
+    await this.cacheManager.set('comments', comments, 0);
     const cachedData = await this.cacheManager.get('comments');
     if (cachedData) {
       return cachedData;
     }
-    const comments = await this.commentsRepository.find();
-    await this.cacheManager.set('comments', comments, 0);
+
     return comments;
   }
 
@@ -44,6 +48,7 @@ export class CommentsService {
 
   async remove(id: number) {
     await this.cacheManager.del('comments');
+    await this.cacheManager.del('replies');
     return await this.commentsRepository.delete(id);
   }
 }

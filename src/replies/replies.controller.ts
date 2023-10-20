@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Param, UseInterceptors } from "@nestjs/common";
 import { RepliesService } from './replies.service';
 import { CreateReplyDto } from './dto/create-reply.dto';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('reply')
 export class RepliesController {
@@ -11,6 +12,9 @@ export class RepliesController {
     return this.repliesService.create(createReplyDto);
   }
 
+  @CacheKey('replies')
+  @CacheTTL(0)
+  @UseInterceptors(CacheInterceptor)
   @Get('all')
   async findAll() {
     return await this.repliesService.findAll();
